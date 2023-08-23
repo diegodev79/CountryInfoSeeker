@@ -1,0 +1,17 @@
+﻿@model MVCTest.Models.CountryInfoModel
+
+<div class="card">
+    <div class="card-header">
+        @Model.Name.Common
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Official Name: @Model.Name.Official</h5>        
+        <p class="card-text">Population: @Model.Population</p>
+        <p class="card-text">Area: @Model.Area</p>
+        <p class="card-text">Languages: @string.Join(", ", Model.Languages.Values)</p>
+        <p class="card-text">Currencies: @string.Join(", ", Model.Currencies.Values.Select(c => $"{c.Name} ({c.Symbol})"))</p>
+        <p class="card-text">Capital: @string.Join(", ", Model.Capital)</p>
+        <p class="card-text">Lat/Lng: @Model.Latlng[0], @Model.Latlng[1]</p>
+        <p class="card-text">Flag: @Model.Flag</p>
+    </div>
+</div>

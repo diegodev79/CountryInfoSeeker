@@ -1,0 +1,80 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="container mt-4">
+    <h1 class="text-center">Sample Project</h1>
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Weather Information</h4>
+                </div>
+                <div class="card-body">
+                   @*  @if (Model.WeatherModel != null)
+                    {
+                        @Html.PartialAsync("WeatherView", Model.WeatherModel)
+                    }
+                    else
+                    {
+                        <p>No weather data available.</p>
+                    } *@
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Country Information</h4>
+                </div>
+                <div class="card-body">
+                    @if (Model.CountryInfoModel != null)
+                    {
+                        @await Html.PartialAsync("~/Views/Partial/CountryInfoView.cshtml", Model.CountryInfoModel)
+                    }
+                    else
+                    {
+                        <p>No Country Info data available.</p>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Latest News</h4>
+                </div>
+                <div class="card-body">
+                    @if (Model.NewsApiResponse != null)
+                    {
+                        @await Html.PartialAsync("~/Views/Partial/NewsView.cshtml", Model.NewsApiResponse)
+                    }
+                    else
+                    {
+                        <p>No news Info data available.</p>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Currency Conversion</h4>
+                </div>
+                <div class="card-body">
+                   @*  @if (Model.CurrencyModel != null)
+                    {
+                        @Html.PartialAsync("CurrencyView", Model.CurrencyModel)
+                    }
+                    else
+                    {
+                        <p>No currency Info data available.</p>
+                    } *@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
