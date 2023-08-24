@@ -1,20 +1,19 @@
 ﻿@model MVCTest.Models.WeatherModel
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Weather Information</title>
-</head>
-<body>
-    <h1>Weather Information</h1>
-    @if (Model != null)
-    {
-        <p>Temperature: @Model.Temperature &#8451;</p>
-        <p>Description: @Model.Description</p>
-    }
-    else
-    {
-        <p>Weather information is not available at the moment.</p>
-    }
-</body>
-</html>
+<div class="card">
+    <div class="card-header">
+        Weather Information
+    </div>
+    <div class="card-body">
+        @if (Model != null)
+        {
+            <h5 class="card-title">City: @Model.Name</h5>
+            <p class="card-text">Temperature: @Model.Main.Temp °C</p>
+            <p class="card-text">Weather: @Model.Weather[0].Description</p>
+            <p class="card-text">Wind Speed: @Model.Wind.Speed m/s</p>
+        }
+        else
+        {
+            <p>Weather information is not available at the moment.</p>
+        }
+    </div>
+</div>

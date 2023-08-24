@@ -15,25 +15,15 @@ namespace MVCTest.Services
 
         public async Task<CurrencyModel> GetCurrencyToBitcoinAsync(string currencyCode)
         {
-            var url = $"{BaseUrl}/{currencyCode}";
-
+            string url = $"{BaseUrl}/rates/bitcoin?convert={currencyCode}";
             var response = await _httpClient.GetAsync(url);
 
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                var currencyData = JsonConvert.DeserializeObject<CurrencyApiResponse>(content);
+                var currencyData = JsonConvert.DeserializeObject<CurrencyModel>(content);
 
-                if (currencyData?.Data != null)
-                {
-                    var btcEquivalent = currencyData.Data.PriceBtc;
-
-                    return new CurrencyModel
-                    {
-                        CurrencyCode = currencyCode,
-                        BtcEquivalent = btcEquivalent
-                    };
-                }
+                return currencyData;
             }
 
             // Handle error cases here
@@ -41,16 +31,5 @@ namespace MVCTest.Services
         }
     }
 
-    // This class represents the structure of the response from the CoinCap API
-    public class CurrencyApiResponse
-    {
-        public CurrencyData Data { get; set; }
-    }
-
-    public class CurrencyData
-    {
-        [JsonProperty("priceBtc")]
-        public decimal PriceBtc { get; set; }
-    }
-
+    
 }

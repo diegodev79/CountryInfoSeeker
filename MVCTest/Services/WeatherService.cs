@@ -24,17 +24,11 @@ namespace MVCTest.Services
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                var weatherData = JsonConvert.DeserializeObject<WeatherApiResponse>(content);
+                var weatherData = JsonConvert.DeserializeObject<WeatherModel>(content);
+                
+                return weatherData;
+                
 
-                if (weatherData != null)
-                {
-                    var weatherModel = new WeatherModel
-                    {
-                        Temperature = weatherData.Main.Temperature,
-                        Description = weatherData.Weather[0].Description
-                    };
-                    return weatherModel;
-                }
             }
             
             // Handle error cases here

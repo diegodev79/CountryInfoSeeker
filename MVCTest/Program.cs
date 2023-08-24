@@ -7,7 +7,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<ICountryInfoService, CountryInfoService>();
 builder.Services.AddScoped<INewsService, NewsService>();
-
+builder.Services.AddScoped<IWeatherService, WeatherService>();
+builder.Services.AddScoped<ICurrencyService, CurrencyService>();
 builder.Services.AddHttpClient();
 var app = builder.Build();
 
