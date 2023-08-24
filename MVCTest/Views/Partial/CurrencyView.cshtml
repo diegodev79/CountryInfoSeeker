@@ -1,0 +1,19 @@
+﻿@model MultiInfoMVC.Models.CurrencyModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Currency to BTC Equivalent</title>
+</head>
+<body>
+    <h1>Currency to BTC Equivalent</h1>
+    @if (Model != null && Model.BtcEquivalent > 0)
+    {
+        <p>1 BTC is equivalent to @Model.BtcEquivalent @Model.CurrencyCode</p>
+    }
+    else
+    {
+        <p>Currency conversion data is not available at the moment.</p>
+    }
+</body>
+</html>

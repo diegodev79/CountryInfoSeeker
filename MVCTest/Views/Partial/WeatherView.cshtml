@@ -1,0 +1,20 @@
+﻿@model MultiInfoMVC.Models.WeatherModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Information</title>
+</head>
+<body>
+    <h1>Weather Information</h1>
+    @if (Model != null)
+    {
+        <p>Temperature: @Model.Temperature &#8451;</p>
+        <p>Description: @Model.Description</p>
+    }
+    else
+    {
+        <p>Weather information is not available at the moment.</p>
+    }
+</body>
+</html>
