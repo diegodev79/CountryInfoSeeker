@@ -1,4 +1,4 @@
-﻿namespace MultiInfoMVC.Models
+﻿namespace MVCTest.Models
 {
     public class CurrencyModel
     {

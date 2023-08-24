@@ -1,7 +1,7 @@
-﻿using MultiInfoMVC.Models;
+﻿using MVCTest.Models;
 using Newtonsoft.Json;
 
-namespace MultiInfoMVC.Services
+namespace MVCTest.Services
 {
     public class WeatherService : IWeatherService
     {

@@ -1,6 +1,6 @@
-﻿using MultiInfoMVC.Models;
+﻿using MVCTest.Models;
 
-namespace MultiInfoMVC.Services
+namespace MVCTest.Services
 {
     public interface ICurrencyService
     {
