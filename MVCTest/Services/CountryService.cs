@@ -1,4 +1,5 @@
-﻿using MVCTest.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using MVCTest.Models;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MVCTest.Services
 {
-    public class CountryService
+    public class CountryService : ICountryService
     {
         private readonly HttpClient _httpClient;
         private List<CountryModel> _countries;
@@ -26,9 +27,21 @@ namespace MVCTest.Services
             }
         }
 
+        public async Task<List<SelectListItem>> GetCountrySelectListAsync()
+        {
+            await LoadCountriesAsync(); // Ensure the countries are loaded
+
+            List<SelectListItem> selectListItems = _countries
+                .Select(c => new SelectListItem(c.Name, c.Iso2Code))
+                .ToList();
+
+            return selectListItems;
+        }
+
         public IReadOnlyList<CountryModel> GetCountries()
         {
             return _countries;
         }
     }
+
 }

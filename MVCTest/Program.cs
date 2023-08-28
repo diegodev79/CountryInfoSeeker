@@ -9,9 +9,17 @@ builder.Services.AddScoped<ICountryInfoService, CountryInfoService>();
 builder.Services.AddScoped<INewsService, NewsService>();
 builder.Services.AddScoped<IWeatherService, WeatherService>();
 builder.Services.AddScoped<ICurrencyService, CurrencyService>();
+builder.Services.AddSingleton<ICountryService, CountryService>();
 builder.Services.AddHttpClient();
 var app = builder.Build();
 
+var countryService = app.Services.GetRequiredService<ICountryService>();
+
+Task.Run(async () =>
+{
+    await countryService.LoadCountriesAsync();
+    Console.WriteLine("Countries loaded.");
+});
 
 
 // Configure the HTTP request pipeline.

@@ -5,7 +5,14 @@
 
 
 <div class="container mt-4">
-    <h1 class="text-center">Sample Project</h1>
+    <h1 class="text-center">Country MVC .NET 7 Test</h1>
+    <div class="form-group">
+        <label for="selectedCountry">Select a Country:</label>
+        <select id="selectedCountry" asp-for="SelectedCountry" asp-items="Model.CountrySelectList">
+            <option value="">Please select</option>
+        </select>
+        <button type="submit">Submit</button>
+    </div>
     <div class="row">
         <div class="col-md-6 mb-4">
             @if (Model.WeatherModel != null)
@@ -53,7 +60,5 @@
                 <p>No currency Info data available.</p>
             }
         </div>
-    </div>
-</div>
     </div>
 </div>

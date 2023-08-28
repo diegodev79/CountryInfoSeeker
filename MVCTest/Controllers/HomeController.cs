@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MVCTest.Models;
 using MVCTest.Services;
 using System.Diagnostics;
@@ -13,15 +14,18 @@ namespace MVCTest.Controllers
         private readonly INewsService _newsService;
         private readonly IWeatherService _weatherService;
         private readonly ICurrencyService _currencyService;
+        private readonly ICountryService _countryService;
+      
 
         public HomeController(ILogger<HomeController> logger, ICountryInfoService countryInfoService, 
-            INewsService newsService, IWeatherService weatherService, ICurrencyService currencyService)
+            INewsService newsService, IWeatherService weatherService, ICurrencyService currencyService, ICountryService countryService)
         {
             _logger = logger;
             _countryInfoService = countryInfoService;
             _newsService = newsService;
             _weatherService = weatherService;
             _currencyService = currencyService;
+            _countryService = countryService;
         }
 
         public async Task<IActionResult> IndexAsync()
@@ -30,12 +34,14 @@ namespace MVCTest.Controllers
             NewsApiResponse newsApiResponse = await _newsService.GetLatestNewsAsync("AR");
             WeatherModel weatherModel = await _weatherService.GetWeatherAsync("Bahia Blanca", "Argentina");
             CurrencyModel currencyModel = await _currencyService.GetCurrencyToBitcoinAsync("ars");
+
             HomeViewModel homeViewModel = new HomeViewModel
             {
                 WeatherModel = weatherModel,
                 CountryInfoModel = countryInfoModel,
-                NewsApiResponse = newsApiResponse
-                //CurrencyModel = currencyModel
+                NewsApiResponse = newsApiResponse,
+                CurrencyModel = currencyModel,
+                CountrySelectList = await _countryService.GetCountrySelectListAsync()
             };
 
             return View(homeViewModel);
