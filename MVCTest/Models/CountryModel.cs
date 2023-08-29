@@ -2,8 +2,15 @@
 {
     public class CountryModel
     {
-        public string Name { get; set; }
-        public string Iso2Code { get; set; }
-        public string Iso3Code { get; set; }
+        public NameModel name { get; set; }
+        public string cca2 { get; set; }
+        public string cca3 { get; set; }
     }
+
+    public class NameModel
+    {
+        public string common { get; set; }
+        public string official { get; set; }
+    }
+
 }

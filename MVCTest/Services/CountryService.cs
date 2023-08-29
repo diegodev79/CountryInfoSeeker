@@ -19,11 +19,12 @@ namespace MVCTest.Services
 
         public async Task LoadCountriesAsync()
         {
-            var response = await _httpClient.GetAsync("https://restcountries.com/v3/all");
+            var response = await _httpClient.GetAsync("https://restcountries.com/v3.1/all?fields=name,cca2,cca3");
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                _countries = JsonSerializer.Deserialize<List<CountryModel>>(content);
+                _countries = JsonSerializer.Deserialize<List<CountryModel>>(content);                            
+
             }
         }
 
@@ -32,7 +33,7 @@ namespace MVCTest.Services
             await LoadCountriesAsync(); // Ensure the countries are loaded
 
             List<SelectListItem> selectListItems = _countries
-                .Select(c => new SelectListItem(c.Name, c.Iso2Code))
+                .Select(c => new SelectListItem(c.name.common, c.cca2))
                 .ToList();
 
             return selectListItems;
