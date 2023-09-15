@@ -1,0 +1,28 @@
+﻿CREATE TABLE Users (
+    Id INT IDENTITY PRIMARY KEY,
+    Username NVARCHAR(255) NOT NULL,
+    Email NVARCHAR(255) NOT NULL,
+    PasswordHash NVARCHAR(255) NOT NULL,
+    -- Other user profile fields
+);
+CREATE TABLE UserClaims (
+    Id INT IDENTITY PRIMARY KEY,
+    UserId INT NOT NULL,
+    ClaimType NVARCHAR(255) NOT NULL,
+    ClaimValue NVARCHAR(255) NOT NULL,
+    FOREIGN KEY (UserId) REFERENCES Users(Id)
+);
+
+CREATE TABLE Roles (
+    Id INT IDENTITY PRIMARY KEY,
+    Name NVARCHAR(50) NOT NULL
+);
+
+
+CREATE TABLE UserRoles (
+    UserId INT NOT NULL,
+    RoleId INT NOT NULL,
+    PRIMARY KEY (UserId, RoleId),
+    FOREIGN KEY (UserId) REFERENCES Users(Id),
+    FOREIGN KEY (RoleId) REFERENCES Roles(Id)
+);
