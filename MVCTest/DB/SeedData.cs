@@ -7,33 +7,51 @@
 
     public static class SeedData
     {
-        public static void Initialize(IServiceProvider serviceProvider)
+        public static async Task Initialize(IServiceProvider serviceProvider)
         {
-            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
-            // Create roles if they don't exist
-            if (!roleManager.RoleExistsAsync("Admin").Result)
+            using (var scope = serviceProvider.CreateScope())
             {
-                roleManager.CreateAsync(new IdentityRole("Admin")).Wait();
-            }
+                var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            // Create a user if it doesn't exist
-            var user = userManager.FindByEmailAsync("diego.barrantes@gmail.com").Result;
-            if (user == null)
-            {
-                user = new ApplicationUser
+                // Create roles if they don't exist
+                if (!roleManager.RoleExistsAsync("Admin").Result)
                 {
-                    UserName = "diego.barrantes@gmail.com",
-                    Email = "diego.barrantes@gmail.com",
-                    FirstName = "Diego",
-                    LastName = "Barrantes"
-                };
+                    roleManager.CreateAsync(new IdentityRole("Admin")).Wait();
+                }
 
-                userManager.CreateAsync(user, "test1234").Wait();
-
-                // Add the user to a role
-                userManager.AddToRoleAsync(user, "Admin").Wait();
+                if (await userManager.FindByEmailAsync("diego.barrantes@gmail.com") == null)
+                {
+                    var user = new ApplicationUser
+                    {
+                        UserName = "diego.barrantes@gmail.com",
+                        Email = "diego.barrantes@gmail.com",
+                        FirstName = "Diego",
+                        LastName = "Barrantes"
+                    };
+                    try
+                    {
+                        var result = await userManager.CreateAsync(user, "tesT1.2.34");
+                        if (result.Succeeded)
+                        {
+                            // Assign the 'Admin' role to the user
+                            await userManager.AddToRoleAsync(user, "Admin");
+                        }
+                        else
+                        {
+                            // Handle errors in result.Errors
+                            foreach (var error in result.Errors)
+                            {
+                                // Log or display error messages
+                                Console.WriteLine(error.Description);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error: {ex.Message}");
+                    }
+                }
             }
         }
     }

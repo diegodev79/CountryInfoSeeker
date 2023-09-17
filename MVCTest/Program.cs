@@ -41,8 +41,6 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 var app = builder.Build();
 
 
-app.UseAuthentication(); // Add this line to enable authentication
-app.UseAuthorization();  // Add this line to enable authorization
 
 var countryService = app.Services.GetRequiredService<ICountryService>();
 
@@ -65,7 +63,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication(); 
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -75,7 +73,7 @@ app.MapControllerRoute(
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    SeedData.Initialize(services); // Call the seed method
+    SeedData.Initialize(services).Wait(); // Call the seed method
 }
 
 

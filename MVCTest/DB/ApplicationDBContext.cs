@@ -9,6 +9,7 @@ namespace MVCTest.DB
         public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<IdentityRole> Roles { get; set; }
         public DbSet<IdentityUserRole<string>> UserRoles { get; set; }
+        public DbSet<IdentityUserClaim<string>> UserClaims { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -22,7 +23,11 @@ namespace MVCTest.DB
             modelBuilder.Entity<ApplicationUser>().ToTable("Users");
             // Configure the IdentityRole entity to use the "Roles" table
             modelBuilder.Entity<IdentityRole>().ToTable("Roles");
-           
+
+            // Configure the IdentityUserClaim<string> entity to use the "UserClaims" table
+            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims");
+            modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
+
             // Configure the relationship between User and UserRole
             modelBuilder.Entity<IdentityUserRole<string>>()
                 .HasKey(ur => new { ur.UserId, ur.RoleId });
